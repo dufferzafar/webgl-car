@@ -93,43 +93,12 @@ RacingGame.prototype.startGame = function()
 	}
 }
 
-RacingGame.prototype.finishGame = function()
-{
-	this.running = false;
-	this.player.stop();
-
-	var i, len = this.cars.length;
-	for (i = 0; i < len; i++)
-	{
-		this.cars[i].stop();
-	}
-
-	this.state = RacingGame.STATE_COMPLETE;
-	this.showResults();
-}
-
-RacingGame.prototype.crash = function(car)
-{
-	this.player.crash();
-	car.crash();
-	this.running = false;
-	this.state = RacingGame.STATE_CRASHED;
-	this.showResults();
-}
-
 RacingGame.prototype.update = function()
 {
 	if (this.running)
 	{
 		this.elapsedTime = (Date.now() - this.startTime) / 1000;
 		this.updateHUD();
-
-		this.testCollision();
-
-		if (this.player.object3D.position.z < (-Environment.ROAD_LENGTH / 2 - Car.CAR_LENGTH))
-		{
-			this.finishGame();
-		}
 	}
 
 	Sim.App.prototype.update.call(this);
@@ -151,71 +120,6 @@ RacingGame.prototype.updateHUD = function()
 		this.hud.odometer.innerHTML = "TRIP<br>" + distanceKm.toFixed(2);
 	}
 }
-
-RacingGame.prototype.testCollision = function()
-{
-	var playerpos = this.player.object3D.position;
-
-	if (playerpos.x > (Environment.ROAD_WIDTH / 2 - (Car.CAR_WIDTH/2)))
-	{
-		this.player.bounce();
-		this.player.object3D.position.x -= 1;
-	}
-
-	if (playerpos.x < -(Environment.ROAD_WIDTH / 2 - (Car.CAR_WIDTH/2)))
-	{
-		this.player.bounce();
-		this.player.object3D.position.x += 1;
-	}
-
-	var i, len = this.cars.length;
-	for (i = 0; i < len; i++)
-	{
-		var carpos = this.cars[i].object3D.position;
-		var dist = playerpos.distanceTo(carpos);
-		if (dist < RacingGame.COLLIDE_RADIUS)
-		{
-			this.crash(this.cars[i]);
-			break;
-		}
-	}
-}
-
-RacingGame.prototype.showResults = function()
-{
-	var overlay = document.getElementById("overlay");
-
-	var headerHtml = "?";
-	var contentsHtml = "?";
-	var elapsedTime = this.elapsedTime.toFixed(2);
-
-	if (this.state == RacingGame.STATE_COMPLETE)
-	{
-		if (elapsedTime < RacingGame.best_time)
-		{
-			RacingGame.best_time = elapsedTime;
-		}
-
-		headerHtml = "RACE COMPLETE!";
-		contentsHtml =
-			"ELAPSED TIME: " + elapsedTime + "s<p>BEST TIME: " + RacingGame.best_time + "s";
-
-	}
-	else if (this.state == RacingGame.STATE_CRASHED)
-	{
-		headerHtml = "CRASHED!";
-		contentsHtml =
-			"CRASH TIME: " + elapsedTime + "s";
-	}
-
-	var header = document.getElementById("header");
-	var contents = document.getElementById("contents");
-	header.innerHTML = headerHtml;
-	contents.innerHTML = contentsHtml;
-
-	overlay.style.display = "block";
-}
-
 
 RacingGame.prototype.handleKeyDown = function(keyCode, charCode)
 {
