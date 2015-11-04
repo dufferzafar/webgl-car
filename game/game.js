@@ -56,7 +56,7 @@ RacingGame.prototype.loadRacer = function()
 {
 	var that = this;
 	var model = new JSONModel;
-	model.init({ url : "../models/Nissan GTR OBJ/Objects/NissanOBJ1.js", scale:0.0254,
+	model.init({ url : "../models/Nissan GTR OBJ/Objects/NissanOBJ1.js", scale:0.025,
 		callback: function(model) { that.onRacerLoaded(model); }
 	});
 }
@@ -67,13 +67,12 @@ RacingGame.prototype.onRacerLoaded = function(model)
 	model.mesh.rotation.y = Math.PI;
 
 	this.player = new Player;
-	this.player.init({ mesh : model.object3D, camera : camera, exhaust:true,
-		sounds : this.sounds});
+	this.player.init({ mesh : model.object3D, camera : camera,
+		exhaust: false, sounds : this.sounds});
 	this.addObject(this.player);
 	this.player.setPosition(0, RacingGame.CAR_Y + Environment.GROUND_Y,
 			Environment.ROAD_LENGTH / 2 - RacingGame.PLAYER_START_Z);
 	this.player.start();
-
 	this.startGame();
 }
 

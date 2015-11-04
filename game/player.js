@@ -104,11 +104,11 @@ Player.prototype.update = function()
 
 		if (this.keysDown[Sim.KeyCodes.KEY_UP])
 		{
-			this.accelerate(0.02);
+			this.accelerate(0.01);
 		}
 		else if (this.keysDown[Sim.KeyCodes.KEY_DOWN])
 		{
-			this.accelerate(-0.02);
+			this.accelerate(-0.01);
 		}
 		else
 		{

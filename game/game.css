@@ -32,10 +32,10 @@ div, form {
 #elapsedTime {
   color:Lime;
   text-align:center;
-  left: 50%;
+  left: 15px;
+  bottom: 35px;
   width: 60px;
   height: 20px;
-  bottom:7%;
   position:absolute;
   font-size:12pt;
   display:none;
