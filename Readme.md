@@ -5,5 +5,5 @@ Graphics Lab Project.
 
 ## Todo
 
-~~1. Remove other players~~
-2. Replace Tachometer With Fuel Gauge
+- [x] Remove other players
+- [ ] Replace Tachometer With Fuel Gauge
