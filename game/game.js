@@ -110,14 +110,7 @@ RacingGame.prototype.updateHUD = function()
 	{
 		var kmh = this.player.speed * 3.6;  // convert m/s to km/hr
 		this.hud.speedometer.update(kmh);
-
-		this.hud.tachometer.update(this.player.rpm);
-
 		this.hud.timer.innerHTML = "TIME<br>" + this.elapsedTime.toFixed(2);
-
-		var roadRelative = (this.player.object3D.position.z - (Environment.ROAD_LENGTH / 2) + 4);
-		var distanceKm = -roadRelative / Environment.ROAD_LENGTH;
-		this.hud.odometer.innerHTML = "TRIP<br>" + distanceKm.toFixed(2);
 	}
 }
 

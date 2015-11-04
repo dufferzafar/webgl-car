@@ -4,55 +4,29 @@ div, form {
 }
 
 #kmph {
-  color:White;
+  color: White;
   text-align:center;
-  left: 38%;
-  width: 120px;
-  height: 140px;
-  bottom:6%;
+  bottom: 25px;
+  right: 50px;
+  width: 150px;
+  height: 150px;
   position:absolute;
   display:none;
 }
-	
+
+#kmph p {
+  bottom: -25px;
+  right: 55px;
+  position: absolute;
+}
+
 #speedometer {
   text-align:left;
-  left:0px;
-  top:0px;
+  right: 5px;
+  top: 0px;
   width: 120px;
   height: 120px;
   position:absolute;
-}
-
-#rpm {
-  color:White;
-  text-align:center;
-  left: 57%;
-  width: 120px;
-  height: 140px;
-  bottom:6%;
-  position:absolute;
-  display:none;
-}
-
-#tachometer {
-  text-align:left;
-  left:0px;
-  top:0px;
-  width: 120px;
-  height: 120px;
-  position:absolute;
-}
-
-#odometer {
-  color:Lime;
-  text-align:center;
-  left: 50%;
-  width: 60px;
-  height: 20px;
-  bottom:17%;
-  position:absolute;
-  font-size:12pt;
-  display:none;
 }
 
 #elapsedTime {
@@ -77,7 +51,7 @@ div, form {
 	padding:10px;
 	width:240px;
 	height:180px;
-	background-color:rgba(200, 200, 200, .8);	
+	background-color:rgba(200, 200, 200, .8);
 	z-index:0;
 	position:absolute;
 	border:3px solid  DarkBlue;

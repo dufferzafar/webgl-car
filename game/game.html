@@ -60,9 +60,7 @@
         Sim.WebGLDetector.detectWebGL();
 
         var timer = document.getElementById('elapsedTime');
-        var odometer = document.getElementById('odometer');
         var kmph = document.getElementById('kmph');
-        var rpm = document.getElementById('rpm');
 
         var sounds = loadSounds();
         adjustVolume(sounds, game_volume);
@@ -79,34 +77,18 @@
           controls.start();
         });
 
-        // The tachometer
-        tachometer = new Speedometer('tachometer', {
-          theme: 'racing-black',
-          max: 5000,
-          threshold: 3500
-        });
-        tachometer.draw();
-        tachometer.addEventListener('speedometer:animateend', function() {
-          tachcontrols.start();
-        });
-
-
         app = new RacingGame();
         app.init({
           container: container,
           hud: {
             speedometer: speedometer,
-            tachometer: tachometer,
             timer: timer,
-            odometer: odometer,
           },
           sounds: sounds,
         });
 
         timer.style.display = 'block';
-        odometer.style.display = 'block';
         kmph.style.display = 'block';
-        rpm.style.display = 'block';
 
         app.focus();
         app.run();
@@ -130,15 +112,8 @@
 	 -->
   <div id="container" style="width:98%; height:94%; position:absolute; "></div>
   <div id="kmph">
-    km/h
     <div id="speedometer"></div>
-  </div>
-  <div id="rpm">
-    rpm
-    <div id="tachometer"></div>
-  </div>
-  <div id="odometer">
-    0.00
+    <p>km/h</p>
   </div>
   <div id="elapsedTime">
     0.00
