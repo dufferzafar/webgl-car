@@ -16,7 +16,7 @@ Player.prototype.init = function(param)
 	this.rpm = 0;
 	this.playingRevSound = false;
 	this.revStartTime = 0;
-	
+
 	if (this.sounds)
 	{
 		this.revSound = this.sounds["rev_short"];
@@ -27,17 +27,17 @@ Player.prototype.init = function(param)
 		this.revSound = null;
 		this.revSoundLong = null;
 	}
-	
+
 	this.keysDown = [];
 	this.keysDown[Sim.KeyCodes.KEY_LEFT] = false;
 	this.keysDown[Sim.KeyCodes.KEY_RIGHT] = false;
 	this.keysDown[Sim.KeyCodes.KEY_UP] = false;
-	this.keysDown[Sim.KeyCodes.KEY_DOWN] = false;	
+	this.keysDown[Sim.KeyCodes.KEY_DOWN] = false;
 }
 
 Player.prototype.updateCamera = function()
 {
-	var camerapos = new THREE.Vector3(Player.CAMERA_OFFSET_X, 
+	var camerapos = new THREE.Vector3(Player.CAMERA_OFFSET_X,
 			Player.CAMERA_OFFSET_Y, Player.CAMERA_OFFSET_Z);
 	camerapos.addSelf(this.object3D.position);
 	this.camera.position.copy(camerapos);
@@ -48,7 +48,7 @@ Player.prototype.updateCamera = function()
 	{
 		this.exhaust1.object3D.rotation.x = this.camera.rotation.x;
 	}
-	
+
 	if (this.exhaust2)
 	{
 		this.exhaust2.object3D.rotation.x = this.camera.rotation.x;
@@ -73,24 +73,24 @@ Player.prototype.update = function()
 			{
 				this.revSound.pause();
 			}
-			
+
 			if (this.revSoundLong)
 			{
 				this.revSoundLong.pause();
 			}
-		}		
+		}
 
 		var now = Date.now();
 		var deltat = now - this.curTime;
 		this.curTime = now;
-		
+
 		var turning = false;
 		if (this.keysDown[Sim.KeyCodes.KEY_LEFT])
 		{
 			this.turn(-0.1);
 			turning = true;
 		}
-		
+
 		if (this.keysDown[Sim.KeyCodes.KEY_RIGHT])
 		{
 			this.turn(0.1);
@@ -101,15 +101,15 @@ Player.prototype.update = function()
 		{
 			this.turn(0);
 		}
-		
+
 		if (this.keysDown[Sim.KeyCodes.KEY_UP])
 		{
 			this.accelerate(0.02);
-		}		
+		}
 		else if (this.keysDown[Sim.KeyCodes.KEY_DOWN])
 		{
 			this.accelerate(-0.02);
-		}	
+		}
 		else
 		{
 			this.accelerate(-0.01);
@@ -117,14 +117,14 @@ Player.prototype.update = function()
 
 		var dist = deltat / 1000 * this.speed / this.speedFactor;
 		this.object3D.position.z -= dist;
-		
+
 		this.updateCamera();
-		
+
 		if (this.speed < 0)
 		{
 			this.speed = 0;
 		}
-	}	
+	}
 
 	Sim.Object.prototype.update.call(this);
 
@@ -160,15 +160,15 @@ Player.prototype.accelerate = function(delta)
 	}
 	else
 	{
-		this.acceleration += delta;		
+		this.acceleration += delta;
 		this.rpm += delta * Player.MAX_RPM;
 	}
-	
+
 	if (this.rpm > Player.MAX_RPM)
 	{
 		this.rpm = Player.MAX_RPM;
 	}
-	
+
 	if (this.acceleration > Player.MAX_ACCELERATION)
 	{
 		this.acceleration = Player.MAX_ACCELERATION;
@@ -178,20 +178,20 @@ Player.prototype.accelerate = function(delta)
 	{
 		this.acceleration = -Player.MAX_ACCELERATION;
 	}
-	
+
 	// Now apply it to speed
 	this.speed += (this.acceleration * 1000 / 3600);
 	if (this.speed < 0)
 	{
 		this.speed = 0;
 	}
-	
+
 	if (this.speed > Player.MAX_SPEED)
 	{
 		this.speed = Player.MAX_SPEED;
 	}
-	
-	
+
+
 	if (this.sounds)
 	{
 		if (delta > 0)
@@ -201,7 +201,7 @@ Player.prototype.accelerate = function(delta)
 				this.revSound.play();
 				this.playingRevSound = true;
 			}
-			
+
 			if (!this.revStartTime)
 			{
 				this.revStartTime = Date.now();
@@ -220,7 +220,7 @@ Player.prototype.accelerate = function(delta)
 			this.revStartTIme = 0;
 		}
 	}
-	
+
 }
 
 
