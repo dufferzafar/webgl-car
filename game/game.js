@@ -31,8 +31,6 @@ RacingGame.prototype.init = function(param)
 
 	// Make sure the game has keyboard focus
 	this.focus();
-
-	this.addContextListener();
 }
 
 RacingGame.prototype.createEnvironment = function()
@@ -128,41 +126,6 @@ RacingGame.prototype.handleKeyUp = function(keyCode, charCode)
 	{
 		this.player.handleKeyUp(keyCode, charCode);
 	}
-}
-
-RacingGame.prototype.restart = function(e)
-{
-	// Re-init the sounds
-	if (this.sounds)
-	{
-		var driving = this.sounds["driving"];
-		driving.pause();
-		driving.currentTime = 0;
-	}
-
-	// Hide the overlay
-	var overlay = document.getElementById("overlay");
-	overlay.style.display = 'none';
-
-	// Reinitialize us
-	this.container.removeChild(this.renderer.domElement);
-	this.init( this.param );
-}
-
-RacingGame.prototype.handleContextLost = function(e)
-{
-	this.restart();
-}
-
-RacingGame.prototype.addContextListener = function()
-{
-	var that = this;
-
-	this.renderer.domElement.addEventListener("webglcontextlost",
-			function(e) {
-				that.handleContextLost(e);
-				},
-			false);
 }
 
 RacingGame.COLLIDE_RADIUS = Math.sqrt(2 * Car.CAR_WIDTH);
