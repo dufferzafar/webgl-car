@@ -51,62 +51,8 @@ RacingGame.prototype.loadCars = function()
 	this.carModels = [];
 	this.nMakesLoaded = 0;
 	this.nMakesTotal = 3;
-
-	var that = this;
-	var model = new JSONModel;
-	model.init(
-			{
-				url : "../models/Nova Car/NovaCar.js",
-				callback: function(model) { that.onCarLoaded(model, "nova",
-				{
-					scale:0.7,
-					position:{x:0, y:.1, z:Car.CAR_LENGTH},
-					rotation:{x:-Math.PI / 2, y:0, z:0},
-				}); }
-			}
-			);
-
-    model = new JSONModel;
-	model.init(
-			{
-				url : "../models/Camaro-1/Camaro.js",
-				callback: function(model) { that.onCarLoaded(model, "camaro",
-				{
-					scale:0.17,
-					position:{x:1, y:-.5, z:Car.CAR_LENGTH},
-					rotation:{x:-Math.PI / 2, y:0, z:0},
-				}); }
-			}
-			);
-
-    model = new JSONModel;
-	model.init(
-			{
-				url : "../models/Camaro-1/Camaro.js",
-				callback: function(model)
-				{ that.onCarLoaded(model, "camaro_silver",
-				{
-					scale:0.17,
-					position:{x:1, y:-.5, z:Car.CAR_LENGTH},
-					rotation:{x:-Math.PI / 2, y:0, z:0},
-					map:"../models/Camaro-1/camaro_4.jpg",
-					mapIndex:0
-				}); }
-			}
-			);
-
+	this.cars = [];
 }
-
-RacingGame.prototype.onCarLoaded = function(model, make, options)
-{
-	this.carModels[this.nMakesLoaded++] = { make: make, model : model, options : options };
-
-	if (this.nMakesLoaded >= this.nMakesTotal)
-	{
-		this.createCars();
-	}
-}
-
 
 RacingGame.prototype.loadRacer = function()
 {
@@ -130,10 +76,7 @@ RacingGame.prototype.onRacerLoaded = function(model)
 			Environment.ROAD_LENGTH / 2 - RacingGame.PLAYER_START_Z);
 	this.player.start();
 
-	if (this.cars)
-	{
-		this.startGame();
-	}
+	this.startGame();
 }
 
 RacingGame.prototype.startGame = function()
@@ -172,56 +115,6 @@ RacingGame.prototype.crash = function(car)
 	this.running = false;
 	this.state = RacingGame.STATE_CRASHED;
 	this.showResults();
-}
-
-RacingGame.prototype.createCars = function()
-{
-	this.cars = [];
-	
-	var i = 0, nCars = 5;
-	for (i = 0; i < nCars; i++)
-	{
-		var object = this.createCar(i % this.nMakesLoaded);
-
-		var car = new Car;
-		car.init({ mesh : object });
-		this.addObject(car);
-		var randx = (Math.random() -.5 ) * (Environment.ROAD_WIDTH - Car.CAR_WIDTH);
-		var randz = (Math.random()) * Environment.ROAD_LENGTH / 2 - RacingGame.CAR_START_Z;
-		car.setPosition(randx, RacingGame.CAR_Y + Environment.GROUND_Y, randz);
-
-		this.cars.push(car);
-		car.start();
-	}
-
-	if (this.player)
-	{
-		this.startGame();
-	}
-}
-
-RacingGame.prototype.createCar = function(makeIndex)
-{
-	var model = this.carModels[makeIndex].model;
-	var options = this.carModels[makeIndex].options;
-
-	var group = new THREE.Object3D;
-	group.rotation.y = Math.PI;
-
-	var mesh = new THREE.Mesh(model.mesh.geometry, model.mesh.material);
-	mesh.rotation.set(options.rotation.x, options.rotation.y, options.rotation.z)
-	mesh.scale.set(options.scale, options.scale, options.scale);
-	mesh.position.set(options.position.x, options.position.y, options.position.z);
-
-	if (options.map)
-	{
-		var material = mesh.geometry.materials[options.mapIndex];
-		material.map = THREE.ImageUtils.loadTexture(options.map);
-	}
-
-	group.add(mesh);
-
-	return group;
 }
 
 RacingGame.prototype.update = function()
