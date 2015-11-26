@@ -26,6 +26,8 @@ RacingGame.prototype.init = function(param)
 	this.curTime = Date.now();
 	this.deltat = 0;
 
+	this.fuel = 80;
+
 	this.running = false;
 	this.state = RacingGame.STATE_LOADING;
 
@@ -108,6 +110,8 @@ RacingGame.prototype.updateHUD = function()
 		var kmh = this.player.speed * 3.6;  // convert m/s to km/hr
 		this.hud.speedometer.update(kmh);
 		this.hud.timer.innerHTML = "TIME<br>" + this.elapsedTime.toFixed(2);
+
+		this.hud.fuelgauge.update(this.fuel);
 	}
 }
 
@@ -116,6 +120,7 @@ RacingGame.prototype.handleKeyDown = function(keyCode, charCode)
 	if (this.player)
 	{
 		this.player.handleKeyDown(keyCode, charCode);
+		this.fuel = this.fuel - 0.05;
 	}
 }
 
@@ -124,6 +129,7 @@ RacingGame.prototype.handleKeyUp = function(keyCode, charCode)
 	if (this.player)
 	{
 		this.player.handleKeyUp(keyCode, charCode);
+		this.fuel = this.fuel - 0.01;
 	}
 }
 

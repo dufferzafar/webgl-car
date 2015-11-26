@@ -26,7 +26,33 @@ div, form {
   top: 0px;
   width: 120px;
   height: 120px;
+  position: absolute;
+}
+
+#litres {
+  color: White;
+  text-align: center;
+  bottom: 25px;
+  right: 50px;
+  width: 150px;
+  height: 150px;
   position:absolute;
+  display:none;
+}
+
+#litres p {
+  bottom: -25px;
+  right: 200px;
+  position: absolute;
+}
+
+#fuelgauge {
+  text-align: left;
+  right: 160px;
+  top: 0px;
+  width: 120px;
+  height: 120px;
+  position: absolute;
 }
 
 #elapsedTime {

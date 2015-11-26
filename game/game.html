@@ -61,6 +61,7 @@
 
         var timer = document.getElementById('elapsedTime');
         var kmph = document.getElementById('kmph');
+        var litres = document.getElementById('litres');
 
         var sounds = loadSounds();
         adjustVolume(sounds, game_volume);
@@ -77,18 +78,33 @@
           controls.start();
         });
 
+        // The fuelgauge
+        fuelgauge = new Speedometer('fuelgauge', {
+          theme: 'racing-black',
+          max: 80,
+          display: false,
+          glossy: false
+        });
+
+        fuelgauge.draw();
+        fuelgauge.addEventListener('speedometer:animateend', function() {
+          tachcontrols.start();
+        });
+
         app = new RacingGame();
         app.init({
           container: container,
           hud: {
             speedometer: speedometer,
             timer: timer,
+            fuelgauge: fuelgauge,
           },
           sounds: sounds,
         });
 
         timer.style.display = 'block';
         kmph.style.display = 'block';
+        litres.style.display = 'block';
 
         app.focus();
         app.run();
@@ -114,6 +130,10 @@
   <div id="kmph">
     <div id="speedometer"></div>
     <p>km/h</p>
+  </div>
+  <div id="litres">
+    <div id="fuelgauge"></div>
+    <p>litres</p>
   </div>
   <div id="elapsedTime">
     0.00
