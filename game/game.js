@@ -92,12 +92,24 @@ RacingGame.prototype.startGame = function()
 	}
 }
 
+RacingGame.prototype.finishGame = function()
+{
+   this.running = false;
+   this.player.stop();
+   this.state = RacingGame.STATE_COMPLETE;
+}
+
 RacingGame.prototype.update = function()
 {
 	if (this.running)
 	{
 		this.elapsedTime = (Date.now() - this.startTime) / 1000;
 		this.updateHUD();
+
+		if (this.player.object3D.position.z < (-Environment.ROAD_LENGTH / 2 - Car.CAR_LENGTH))
+		{
+		    this.finishGame();
+		}
 	}
 
 	Sim.App.prototype.update.call(this);
