@@ -3,6 +3,8 @@
 
 Graphics Lab Project.
 
+![Screenshot](screenshot.png)
+
 ## Todo
 
 - [x] Remove other players
